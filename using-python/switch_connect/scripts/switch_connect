@@ -1,0 +1,22 @@
+#!/usr/bin/python
+#-*-coding:utf-8-*-
+
+import sys
+import rospy
+from std_msgs .msg import Bool
+
+from manages.data_conversion import DataConversion
+
+def main():
+    print 'switch_connect v 1.0.0'
+    
+    try:
+        rospy.init_node('SwitchConnect')
+        conv = DataConversion()
+        rospy.spin()
+
+    except rospy.ROSInterruptException:
+        pass
+
+if __name__ == '__main__':
+    main()
