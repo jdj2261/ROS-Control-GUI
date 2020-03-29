@@ -1,0 +1,8 @@
+prefix=/home/djjin/Work/test_ws/src/nav_manager/build/devel
+
+Name: nav_manager
+Description: Description of nav_manager
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
