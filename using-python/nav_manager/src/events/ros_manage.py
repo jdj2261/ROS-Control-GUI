@@ -21,6 +21,7 @@ class RosManager():
         # self.__comm.signal.connect(self.get_signal)
 
         self.__pub_go_to_goal = rospy.Publisher('/move_base/goal', MoveBaseActionGoal, queue_size=1)
+        self.__pub_go_to_simple_goal = rospy.Publisher('/move_base_simple/goal', PoseStamped, queue_size=1)
         self.__pub_cancel_goal = rospy.Publisher('/move_base/cancel', GoalID, queue_size=1)
 
         # rospy.Subscriber('/odom', Odometry, self.odom_callback)
@@ -36,7 +37,17 @@ class RosManager():
         goal_target.goal.target_pose.pose.orientation.z = float(z)
         goal_target.goal.target_pose.pose.orientation.w = float(w)
 
+        goal_simple_target = PoseStamped()
+
+        goal_simple_target.header.frame_id = "map"
+        goal_simple_target.header.stamp = rospy.get_rostime()
+        goal_simple_target.pose.position.x = float(x)                    
+        goal_simple_target.pose.position.y = float(y)
+        goal_simple_target.pose.orientation.z = float(z)
+        goal_simple_target.pose.orientation.w = float(w)
+
         self.__pub_go_to_goal.publish(goal_target)
+        self.__pub_go_to_simple_goal.publish(goal_simple_target)
 
     def pub_cancel_goal(self):
         goal_cancel = GoalID()
