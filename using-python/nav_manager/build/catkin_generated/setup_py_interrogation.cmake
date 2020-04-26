@@ -1,6 +1,0 @@
-set(nav_manager_SETUP_PY_VERSION "0.0.0")
-set(nav_manager_SETUP_PY_SCRIPTS "")
-set(nav_manager_SETUP_PY_PACKAGES "views;events")
-set(nav_manager_SETUP_PY_PACKAGE_DIRS "src/views;src/events")
-set(nav_manager_SETUP_PY_MODULES "")
-set(nav_manager_SETUP_PY_MODULE_DIRS "")
