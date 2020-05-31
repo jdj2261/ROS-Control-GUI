@@ -48,8 +48,8 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   ** Button test - explicit way
   ********************************/
 //  qRegisterMetaType<geometry_msgs::Twist>("geometry_msgs::Twist");
-  QObject::connect(ui.left_button, SIGNAL(clicked()), this, SLOT(moveLeft()));
-  QObject::connect(ui.test_button, SIGNAL(clicked()), this, SLOT(logTest()));
+  QObject::connect(ui.go_Button, SIGNAL(clicked()), this, SLOT(go_to_goal()));
+  QObject::connect(ui.stop_button, SIGNAL(clicked()), this, SLOT(go_to_cancel()));
 
 //  ui.lineEdit_4;
 
@@ -74,7 +74,6 @@ void MainWindow::showButtonTestMessage() {
     msgBox.setText("Button test ...");
     msgBox.exec();
     //close();
-
 }
 
 
@@ -103,14 +102,36 @@ void MainWindow::showButtonTestMessage() {
 //  }
 //}
 
-void MainWindow::on_test_button_clicked(bool check ) {
-    showButtonTestMessage();
-    geometry_msgs::Twist msg;
-    msg.linear.x = 1.0;
-    msg.angular.z = 0.5;
-    qnode.sendCmdVelMsg(msg);
+
+void MainWindow::on_go_Button_clicked(bool check )
+{
+
+    move_base_msgs::MoveBaseActionGoal m_goal_msg;
+
+    m_goal_msg.goal.target_pose.header.frame_id = "map";
+    m_goal_msg.goal.target_pose.header.stamp = ros::Time();
+    m_goal_msg.goal.target_pose.pose.position.x = ui.go_to_goal_x->text().toFloat();
+    m_goal_msg.goal.target_pose.pose.position.y = ui.go_to_goal_y->text().toFloat();
+    m_goal_msg.goal.target_pose.pose.orientation.z = ui.go_to_goal_theta->text().toFloat();
+    m_goal_msg.goal.target_pose.pose.orientation.w = ui.go_to_goal_w->text().toFloat();
+
+    geometry_msgs::PoseStamped m_simple_goal_msg;
+
+    m_simple_goal_msg.header.frame_id = "map";
+    m_simple_goal_msg.header.stamp = ros::Time();
+    m_simple_goal_msg.pose.position.x = ui.go_to_goal_x->text().toFloat();
+    m_simple_goal_msg.pose.position.y = ui.go_to_goal_y->text().toFloat();;
+    m_simple_goal_msg.pose.orientation.z = ui.go_to_goal_theta->text().toFloat();;
+    m_simple_goal_msg.pose.orientation.w = ui.go_to_goal_w->text().toFloat();;
+
+    qnode.sendGoalMsg(m_goal_msg);
+    qnode.sendSimpleGoalMsg(m_simple_goal_msg);
 }
 
+void MainWindow::on_stop_button_clicked(bool check)
+{
+
+}
 
 /*****************************************************************************
 ** Implemenation [Slots][manually connected]
@@ -125,40 +146,49 @@ void MainWindow::updateLoggingView() {
   ui.view_logging->scrollToBottom();
 }
 
-void MainWindow::moveLeft() {
+void MainWindow::go_to_goal() {
     logging_model = qnode.loggingModel();
     logging_model->insertRows(logging_model->rowCount(), 1);
+
+    QString qstr_pos_x, qstr_pos_y, qstr_pos_theta, qstr_pos_w;
+
+    qstr_pos_x      = ui.go_to_goal_x->text();
+    qstr_pos_y      = ui.go_to_goal_y->text();
+    qstr_pos_theta  = ui.go_to_goal_theta->text();
+    qstr_pos_w     = ui.go_to_goal_w->text();
+
     std::stringstream logging_model_msg;
-    logging_model_msg << "move to left ...";
+    logging_model_msg << "go to goal -->" << " " << qstr_pos_x.toStdString()
+                      << " " << qstr_pos_y.toStdString()
+                      << " " << qstr_pos_theta.toStdString()
+                      << " " << qstr_pos_w.toStdString();
+
     QVariant new_row(QString(logging_model_msg.str().c_str()));
     logging_model->setData(logging_model->index(logging_model->rowCount()-1), new_row);
 
-    std::cout << logging_model->rowCount() << std::endl;
     std::cout << logging_model_msg.str().c_str() << std::endl;
 }
 
-void MainWindow::logTest() {
+void MainWindow::go_to_cancel() {
     logging_model = qnode.loggingModel();
     logging_model->insertRows(logging_model->rowCount(), 1);
     std::stringstream logging_model_msg;
-    QString qstr_pos_x, qstr_pos_y, qstr_pos_theta;
 
-    qstr_pos_x      = ui.Pose_x->text();
-    qstr_pos_y      = ui.Pose_y->text();
-    qstr_pos_theta  = ui.Pose_theta->text();
+    if (ui.stop_button->isChecked())
+    {
+      logging_model_msg << "STOP!!";
+    }
+    else
+    {
+      logging_model_msg << "RELEASE!!";
+    }
 
-
-    std::cout << "Test : " << qstr_pos_x.toFloat() << std::endl;
-    std::cout << "Test : " << qstr_pos_y.toFloat() << std::endl;
-    std::cout << "Test : " << qstr_pos_theta.toFloat() << std::endl;
-
-    logging_model_msg << "logging test";
     QVariant new_row(QString(logging_model_msg.str().c_str()));
     logging_model->setData(logging_model->index(logging_model->rowCount()-1), new_row);
 
-//    std::cout << logging_model->rowCount() << std::endl;
     std::cout << logging_model_msg.str().c_str() << std::endl;
 }
+
 /*****************************************************************************
 ** Implementation [Menu]
 *****************************************************************************/

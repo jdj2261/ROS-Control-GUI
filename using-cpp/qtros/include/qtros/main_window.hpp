@@ -46,16 +46,16 @@ public Q_SLOTS:
   ** Auto-connections (connectSlotsByName())
   *******************************************/
   void on_actionAbout_triggered();
-//  void on_button_connect_clicked(bool check );
-  void on_test_button_clicked(bool check );
+  void on_go_Button_clicked(bool check);
+  void on_stop_button_clicked(bool check);
 
 
   /******************************************
     ** Manual connections
     *******************************************/
   void updateLoggingView(); // no idea why this can't connect automatically
-  void moveLeft();
-  void logTest();
+  void go_to_goal();
+  void go_to_cancel();
 
 
 private:

@@ -25,6 +25,11 @@
 #include <QThread>
 #include <QStringListModel>
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/PoseWithCovarianceStamped.h>
+
+#include <move_base_msgs/MoveBaseActionGoal.h>
+#include <actionlib_msgs/GoalID.h>
+#include <nav_msgs/Odometry.h>
 
 /*****************************************************************************
 ** Namespaces
@@ -59,7 +64,13 @@ public:
   }
 
   void sendCmdVelMsg(geometry_msgs::Twist msg);
+  void sendGoalMsg(move_base_msgs::MoveBaseActionGoal msg);
+  void sendSimpleGoalMsg(geometry_msgs::PoseStamped msg);
   void log( const LogLevel &level, const std::string &msg);
+  void OdomCallback(const nav_msgs::Odometry &msg);
+  void InitialPoseCallback(const geometry_msgs::PoseWithCovarianceStamped &msg);
+  void GoalPoseCallback(const move_base_msgs::MoveBaseActionGoal &msg);
+
 
 Q_SIGNALS:
   void loggingUpdated();
@@ -71,6 +82,13 @@ private:
 
   ros::Publisher chatter_publisher_;
   ros::Publisher cmd_vel_pub_;
+  ros::Publisher goal_pose_pub_;
+  ros::Publisher simple_goal_pub_;
+  ros::Publisher cancel_goal_pub_;
+  ros::Subscriber odom_sub_;
+  ros::Subscriber init_pose_sub_;
+  ros::Subscriber goal_pose_sub_;
+
 
   QStringListModel logging_model;
 };

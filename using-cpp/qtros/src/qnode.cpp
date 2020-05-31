@@ -50,30 +50,56 @@ bool QNode::init() {
   // Add your ros communications here.
 
 
-  cmd_vel_pub_ = n.advertise<geometry_msgs::Twist>("cmd_vel",1);
-  start();
-  return true;
-}
+  cmd_vel_pub_      = n.advertise<geometry_msgs::Twist>("cmd_vel",1);
+  goal_pose_pub_    = n.advertise<move_base_msgs::MoveBaseActionGoal>("/move_base/goal",1);
+  simple_goal_pub_  = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal",1);
+  cancel_goal_pub_  = n.advertise<actionlib_msgs::GoalID>("/move_base/cancel",1);
 
-bool QNode::init(const std::string &master_url, const std::string &host_url) {
-  std::map<std::string,std::string> remappings;
-  remappings["__master"] = master_url;
-  remappings["__hostname"] = host_url;
-  ros::init(remappings,"qtros");
-  if ( ! ros::master::check() ) {
-    return false;
-  }
-  ros::start(); // explicitly needed since our nodehandle is going out of scope.
-  ros::NodeHandle n;
-  // Add your ros communications here.
-
-
-  cmd_vel_pub_ = n.advertise<geometry_msgs::Twist>("cmd_vel",1);
-
+  odom_sub_         = n.subscribe("/odom",1,&QNode::OdomCallback, this);
+  init_pose_sub_    = n.subscribe("/initialpose",1,&QNode::InitialPoseCallback, this);
+  goal_pose_sub_    = n.subscribe("/move_base/goal",1,&QNode::GoalPoseCallback, this);
 
   start();
   return true;
 }
+
+void QNode::OdomCallback(const nav_msgs::Odometry &msg)
+{
+  ROS_INFO("odom");
+
+}
+
+void QNode::InitialPoseCallback(const geometry_msgs::PoseWithCovarianceStamped &msg)
+{
+   ROS_INFO("InitialPose");
+
+}
+
+void QNode::GoalPoseCallback(const move_base_msgs::MoveBaseActionGoal &msg)
+{
+   ROS_INFO("GoalPose");
+
+}
+
+//bool QNode::init(const std::string &master_url, const std::string &host_url) {
+//  std::map<std::string,std::string> remappings;
+//  remappings["__master"] = master_url;
+//  remappings["__hostname"] = host_url;
+//  ros::init(remappings,"qtros");
+//  if ( ! ros::master::check() ) {
+//    return false;
+//  }
+//  ros::start(); // explicitly needed since our nodehandle is going out of scope.
+//  ros::NodeHandle n;
+//  // Add your ros communications here.
+
+
+//  cmd_vel_pub_ = n.advertise<geometry_msgs::Twist>("cmd_vel",1);
+
+
+//  start();
+//  return true;
+//}
 
 void QNode::run() {
   ros::Rate loop_rate(1);
@@ -135,5 +161,23 @@ void QNode::sendCmdVelMsg(geometry_msgs::Twist msg)
   cmd_vel_pub_.publish( msg );
   log( Info , "Send CmdMsg" );
 }
+
+void QNode::sendGoalMsg(move_base_msgs::MoveBaseActionGoal msg)
+{
+  goal_pose_pub_.publish(msg);
+  log( Info , "Send GoalMsg");
+}
+
+void QNode::sendSimpleGoalMsg(geometry_msgs::PoseStamped msg)
+{
+  simple_goal_pub_.publish(msg);
+  log( Info , "Send SimpleGoalMsg");
+}
+
+//void QNode::simple_goal_pub_(move_base_msgs::MoveBaseActionGoal msg)
+//{
+//  simple_goal_pub_.publish(msg);
+//  log( Info , "Send simple_goal_pub");
+//}
 
 }  // namespace qtros
