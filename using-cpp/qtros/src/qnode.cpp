@@ -65,8 +65,8 @@ bool QNode::init() {
 
 void QNode::OdomCallback(const nav_msgs::Odometry &msg)
 {
-  ROS_INFO("odom");
-
+  m_pose_x = msg.pose.pose.position.x;
+  Q_EMIT PosexUpdated(m_pose_x);
 }
 
 void QNode::InitialPoseCallback(const geometry_msgs::PoseWithCovarianceStamped &msg)
@@ -81,28 +81,8 @@ void QNode::GoalPoseCallback(const move_base_msgs::MoveBaseActionGoal &msg)
 
 }
 
-//bool QNode::init(const std::string &master_url, const std::string &host_url) {
-//  std::map<std::string,std::string> remappings;
-//  remappings["__master"] = master_url;
-//  remappings["__hostname"] = host_url;
-//  ros::init(remappings,"qtros");
-//  if ( ! ros::master::check() ) {
-//    return false;
-//  }
-//  ros::start(); // explicitly needed since our nodehandle is going out of scope.
-//  ros::NodeHandle n;
-//  // Add your ros communications here.
-
-
-//  cmd_vel_pub_ = n.advertise<geometry_msgs::Twist>("cmd_vel",1);
-
-
-//  start();
-//  return true;
-//}
-
 void QNode::run() {
-  ros::Rate loop_rate(1);
+  ros::Rate loop_rate(50);
   int count = 0;
   while ( ros::ok() ) {
 
@@ -171,6 +151,12 @@ void QNode::sendGoalMsg(move_base_msgs::MoveBaseActionGoal msg)
 void QNode::sendSimpleGoalMsg(geometry_msgs::PoseStamped msg)
 {
   simple_goal_pub_.publish(msg);
+  log( Info , "Send SimpleGoalMsg");
+}
+
+void QNode::sendCancelGoalMsg(actionlib_msgs::GoalID msg)
+{
+  cancel_goal_pub_.publish(msg);
   log( Info , "Send SimpleGoalMsg");
 }
 

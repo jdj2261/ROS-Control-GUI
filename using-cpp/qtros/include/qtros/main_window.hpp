@@ -56,6 +56,7 @@ public Q_SLOTS:
   void updateLoggingView(); // no idea why this can't connect automatically
   void go_to_goal();
   void go_to_cancel();
+  void updatePoseX(float value);
 
 
 private:

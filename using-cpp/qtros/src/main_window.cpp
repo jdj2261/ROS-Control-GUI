@@ -51,6 +51,8 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   QObject::connect(ui.go_Button, SIGNAL(clicked()), this, SLOT(go_to_goal()));
   QObject::connect(ui.stop_button, SIGNAL(clicked()), this, SLOT(go_to_cancel()));
 
+  QObject::connect(&qnode, SIGNAL(PosexUpdated(float)), this, SLOT(updatePoseX(float)));
+
 //  ui.lineEdit_4;
 
   qnode.init();
@@ -126,11 +128,13 @@ void MainWindow::on_go_Button_clicked(bool check )
 
     qnode.sendGoalMsg(m_goal_msg);
     qnode.sendSimpleGoalMsg(m_simple_goal_msg);
+
 }
 
 void MainWindow::on_stop_button_clicked(bool check)
 {
-
+    actionlib_msgs::GoalID m_cancel_goal_msg;
+    if (ui.stop_button->isChecked()) qnode.sendCancelGoalMsg(m_cancel_goal_msg);
 }
 
 /*****************************************************************************
@@ -155,7 +159,7 @@ void MainWindow::go_to_goal() {
     qstr_pos_x      = ui.go_to_goal_x->text();
     qstr_pos_y      = ui.go_to_goal_y->text();
     qstr_pos_theta  = ui.go_to_goal_theta->text();
-    qstr_pos_w     = ui.go_to_goal_w->text();
+    qstr_pos_w      = ui.go_to_goal_w->text();
 
     std::stringstream logging_model_msg;
     logging_model_msg << "go to goal -->" << " " << qstr_pos_x.toStdString()
@@ -189,6 +193,13 @@ void MainWindow::go_to_cancel() {
     std::cout << logging_model_msg.str().c_str() << std::endl;
 }
 
+void MainWindow::updatePoseX(float value)
+{
+    value = qnode.m_pose_x;
+    ui.Pose_x->setAlignment(Qt::AlignRight);
+    ui.Pose_x->setText(QString::number(value));
+
+}
 /*****************************************************************************
 ** Implementation [Menu]
 *****************************************************************************/

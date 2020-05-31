@@ -24,6 +24,7 @@
 #include <string>
 #include <QThread>
 #include <QStringListModel>
+#include <QLineEdit>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
 
@@ -66,15 +67,18 @@ public:
   void sendCmdVelMsg(geometry_msgs::Twist msg);
   void sendGoalMsg(move_base_msgs::MoveBaseActionGoal msg);
   void sendSimpleGoalMsg(geometry_msgs::PoseStamped msg);
+  void sendCancelGoalMsg(actionlib_msgs::GoalID msg);
   void log( const LogLevel &level, const std::string &msg);
   void OdomCallback(const nav_msgs::Odometry &msg);
   void InitialPoseCallback(const geometry_msgs::PoseWithCovarianceStamped &msg);
   void GoalPoseCallback(const move_base_msgs::MoveBaseActionGoal &msg);
 
+  float m_pose_x;
 
 Q_SIGNALS:
   void loggingUpdated();
   void rosShutdown();
+  void PosexUpdated(float);
 
 private:
   int init_argc;
@@ -91,6 +95,7 @@ private:
 
 
   QStringListModel logging_model;
+
 };
 
 }  // namespace qtros
