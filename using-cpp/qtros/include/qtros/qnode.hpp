@@ -73,12 +73,18 @@ public:
   void InitialPoseCallback(const geometry_msgs::PoseWithCovarianceStamped &msg);
   void GoalPoseCallback(const move_base_msgs::MoveBaseActionGoal &msg);
 
-  float m_pose_x;
+  float m_pose_x, m_pose_y, m_pose_z, m_pose_w;
+  float m_vel_x, m_vel_y, m_vel_z, m_vel_w;
+  float m_init_x, m_init_y, m_init_z, m_init_w;
+  float m_goal_x, m_goal_y, m_goal_z, m_goal_w;
 
 Q_SIGNALS:
   void loggingUpdated();
   void rosShutdown();
-  void PosexUpdated(float);
+  void OdomUpdated(float);
+  void InitUpdated(float);
+  void GoalUpdated(float);
+
 
 private:
   int init_argc;

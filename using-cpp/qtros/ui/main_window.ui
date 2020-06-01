@@ -242,7 +242,7 @@
               </widget>
              </item>
              <item row="7" column="4">
-              <widget class="QLineEdit" name="lineEdit_8">
+              <widget class="QLineEdit" name="Goal_w">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -279,7 +279,7 @@
               <widget class="QLineEdit" name="go_to_goal_x"/>
              </item>
              <item row="7" column="1">
-              <widget class="QLineEdit" name="lineEdit_5">
+              <widget class="QLineEdit" name="Goal_x">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -348,7 +348,7 @@
               </widget>
              </item>
              <item row="7" column="3">
-              <widget class="QLineEdit" name="lineEdit_7">
+              <widget class="QLineEdit" name="Goal_theta">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -412,7 +412,7 @@
               </widget>
              </item>
              <item row="7" column="2">
-              <widget class="QLineEdit" name="lineEdit_6">
+              <widget class="QLineEdit" name="Goal_y">
                <property name="enabled">
                 <bool>false</bool>
                </property>
@@ -427,6 +427,20 @@
                 <bool>false</bool>
                </property>
                <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QLineEdit" name="Pose_w">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="4">
+              <widget class="QLineEdit" name="Vel_w">
+               <property name="enabled">
                 <bool>false</bool>
                </property>
               </widget>

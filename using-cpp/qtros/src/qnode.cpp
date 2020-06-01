@@ -66,18 +66,49 @@ bool QNode::init() {
 void QNode::OdomCallback(const nav_msgs::Odometry &msg)
 {
   m_pose_x = msg.pose.pose.position.x;
-  Q_EMIT PosexUpdated(m_pose_x);
+  m_pose_y = msg.pose.pose.position.y;
+  m_pose_z = msg.pose.pose.orientation.z;
+  m_pose_w = msg.pose.pose.orientation.w;
+
+  m_vel_x = msg.twist.twist.linear.x;
+  m_vel_y = msg.twist.twist.linear.y;
+  m_vel_z = msg.twist.twist.angular.z;
+
+  Q_EMIT OdomUpdated(m_pose_x);
+  Q_EMIT OdomUpdated(m_pose_y);
+  Q_EMIT OdomUpdated(m_pose_z);
+  Q_EMIT OdomUpdated(m_pose_w);
+
+  Q_EMIT OdomUpdated(m_vel_x);
+  Q_EMIT OdomUpdated(m_vel_y);
+  Q_EMIT OdomUpdated(m_vel_z);
+
 }
 
 void QNode::InitialPoseCallback(const geometry_msgs::PoseWithCovarianceStamped &msg)
 {
-   ROS_INFO("InitialPose");
+  m_init_x = msg.pose.pose.position.x;
+  m_init_y = msg.pose.pose.position.y;
+  m_init_z = msg.pose.pose.orientation.z;
+  m_init_w = msg.pose.pose.orientation.w;
 
+  Q_EMIT InitUpdated(m_init_x);
+  Q_EMIT InitUpdated(m_init_y);
+  Q_EMIT InitUpdated(m_init_z);
+  Q_EMIT InitUpdated(m_init_w);
 }
 
 void QNode::GoalPoseCallback(const move_base_msgs::MoveBaseActionGoal &msg)
 {
-   ROS_INFO("GoalPose");
+  m_goal_x = msg.goal.target_pose.pose.position.x;
+  m_goal_y = msg.goal.target_pose.pose.position.y;
+  m_goal_z = msg.goal.target_pose.pose.orientation.z;
+  m_goal_w = msg.goal.target_pose.pose.orientation.w;
+
+  Q_EMIT GoalUpdated(m_goal_x);
+  Q_EMIT GoalUpdated(m_goal_y);
+  Q_EMIT GoalUpdated(m_goal_z);
+  Q_EMIT GoalUpdated(m_goal_w);
 
 }
 
