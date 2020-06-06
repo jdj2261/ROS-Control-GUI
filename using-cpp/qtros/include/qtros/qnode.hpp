@@ -31,6 +31,7 @@
 #include <move_base_msgs/MoveBaseActionGoal.h>
 #include <actionlib_msgs/GoalID.h>
 #include <nav_msgs/Odometry.h>
+#include <std_srvs/Empty.h>
 
 /*****************************************************************************
 ** Namespaces
@@ -64,11 +65,18 @@ public:
     return &logging_model;
   }
 
+  // Publish
   void sendCmdVelMsg(geometry_msgs::Twist msg);
   void sendGoalMsg(move_base_msgs::MoveBaseActionGoal msg);
   void sendSimpleGoalMsg(geometry_msgs::PoseStamped msg);
   void sendCancelGoalMsg(actionlib_msgs::GoalID msg);
+  void sendClearCostmapSrv(std_srvs::Empty msg);
+
+  // Log
   void log( const LogLevel &level, const std::string &msg);
+
+
+  // Callback
   void OdomCallback(const nav_msgs::Odometry &msg);
   void InitialPoseCallback(const geometry_msgs::PoseWithCovarianceStamped &msg);
   void GoalPoseCallback(const move_base_msgs::MoveBaseActionGoal &msg);
@@ -95,9 +103,12 @@ private:
   ros::Publisher goal_pose_pub_;
   ros::Publisher simple_goal_pub_;
   ros::Publisher cancel_goal_pub_;
+
   ros::Subscriber odom_sub_;
   ros::Subscriber init_pose_sub_;
   ros::Subscriber goal_pose_sub_;
+
+  ros::ServiceClient clearCostmap_cient_;
 
 
   QStringListModel logging_model;

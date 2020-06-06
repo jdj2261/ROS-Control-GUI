@@ -52,6 +52,7 @@ public Q_SLOTS:
   void on_actionAbout_triggered();
   void on_go_Button_clicked(bool check);
   void on_stop_button_clicked(bool check);
+  void on_clear_costmap_button_clicked(bool check);
 
 
   /******************************************
@@ -60,6 +61,7 @@ public Q_SLOTS:
   void updateLoggingView(); // no idea why this can't connect automatically
   void go_to_goal();
   void go_to_cancel();
+  void clear_costmap();
   void updateOdom(float);
   void updateInit(float);
   void updateGoal(float);

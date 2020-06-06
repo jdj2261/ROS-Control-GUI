@@ -50,10 +50,12 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 //  qRegisterMetaType<geometry_msgs::Twist>("geometry_msgs::Twist");
   QObject::connect(ui.go_Button, SIGNAL(clicked()), this, SLOT(go_to_goal()));
   QObject::connect(ui.stop_button, SIGNAL(clicked()), this, SLOT(go_to_cancel()));
+  QObject::connect(ui.clear_costmap_button, SIGNAL(clicked()), this, SLOT(clear_costmap()));
 
   QObject::connect(&qnode, SIGNAL(OdomUpdated(float)), this, SLOT(updateOdom(float)));
   QObject::connect(&qnode, SIGNAL(InitUpdated(float)), this, SLOT(updateInit(float)));
   QObject::connect(&qnode, SIGNAL(GoalUpdated(float)), this, SLOT(updateGoal(float)));
+
 
 //  ui.lineEdit_4;
 
@@ -157,6 +159,12 @@ void MainWindow::on_stop_button_clicked(bool check)
     }
 }
 
+void MainWindow::on_clear_costmap_button_clicked(bool check)
+{
+    std_srvs::Empty em;
+    qnode.sendClearCostmapSrv(em);
+}
+
 /*****************************************************************************
 ** Implemenation [Slots][manually connected]
 *****************************************************************************/
@@ -166,11 +174,13 @@ void MainWindow::on_stop_button_clicked(bool check)
  * this will drop the cursor down to the last line in the QListview to ensure
  * the user can always see the latest log message.
  */
-void MainWindow::updateLoggingView() {
+void MainWindow::updateLoggingView()
+{
   ui.view_logging->scrollToBottom();
 }
 
-void MainWindow::go_to_goal() {
+void MainWindow::go_to_goal()
+{
     logging_model = qnode.loggingModel();
     logging_model->insertRows(logging_model->rowCount(), 1);
 
@@ -193,7 +203,8 @@ void MainWindow::go_to_goal() {
     std::cout << logging_model_msg.str().c_str() << std::endl;
 }
 
-void MainWindow::go_to_cancel() {
+void MainWindow::go_to_cancel()
+{
     logging_model = qnode.loggingModel();
     logging_model->insertRows(logging_model->rowCount(), 1);
     std::stringstream logging_model_msg;
@@ -211,6 +222,19 @@ void MainWindow::go_to_cancel() {
     logging_model->setData(logging_model->index(logging_model->rowCount()-1), new_row);
 
     std::cout << logging_model_msg.str().c_str() << std::endl;
+}
+
+void MainWindow::clear_costmap()
+{
+  logging_model = qnode.loggingModel();
+  logging_model->insertRows(logging_model->rowCount(), 1);
+  std::stringstream logging_model_msg;
+  logging_model_msg << "Clear Costmap!!";
+
+  QVariant new_row(QString(logging_model_msg.str().c_str()));
+  logging_model->setData(logging_model->index(logging_model->rowCount()-1), new_row);
+
+  std::cout << logging_model_msg.str().c_str() << std::endl;
 }
 
 void MainWindow::updateOdom(float)

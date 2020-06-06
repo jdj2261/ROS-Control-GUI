@@ -59,6 +59,8 @@ bool QNode::init() {
   init_pose_sub_    = n.subscribe("/initialpose",1,&QNode::InitialPoseCallback, this);
   goal_pose_sub_    = n.subscribe("/move_base/goal",1,&QNode::GoalPoseCallback, this);
 
+  clearCostmap_cient_ = n.serviceClient<std_srvs::Empty>("/move_base/clear_costmaps");
+
   start();
   return true;
 }
@@ -189,6 +191,12 @@ void QNode::sendCancelGoalMsg(actionlib_msgs::GoalID msg)
 {
   cancel_goal_pub_.publish(msg);
   log( Info , "Send SimpleGoalMsg");
+}
+
+void QNode::sendClearCostmapSrv(std_srvs::Empty msg)
+{
+  clearCostmap_cient_.call(msg);
+  log( Info, " --- Clear Costmap ---");
 }
 
 //void QNode::simple_goal_pub_(move_base_msgs::MoveBaseActionGoal msg)
