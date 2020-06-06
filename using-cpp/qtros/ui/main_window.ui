@@ -86,7 +86,7 @@
            <string>Logging</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
+           <item row="0" column="1">
             <widget class="QListView" name="view_logging">
              <property name="enabled">
               <bool>true</bool>
@@ -185,11 +185,11 @@
         <item>
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="Nav_manager">
            <attribute name="title">
-            <string>Nav_manger</string>
+            <string>Navigation</string>
            </attribute>
            <widget class="QWidget" name="widget_2" native="true">
             <property name="geometry">
@@ -215,6 +215,12 @@
                  <width>16777215</width>
                  <height>20</height>
                 </size>
+               </property>
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
                </property>
                <property name="text">
                 <string>X</string>
@@ -301,6 +307,12 @@
              </item>
              <item row="0" column="4" alignment="Qt::AlignHCenter">
               <widget class="QLabel" name="label_w">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>W</string>
                </property>
@@ -389,6 +401,12 @@
              </item>
              <item row="0" column="3" alignment="Qt::AlignHCenter">
               <widget class="QLabel" name="label_theta">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>Theta</string>
                </property>
@@ -396,6 +414,12 @@
              </item>
              <item row="0" column="2" alignment="Qt::AlignHCenter">
               <widget class="QLabel" name="label_y">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>Y</string>
                </property>
@@ -448,224 +472,216 @@
             </layout>
            </widget>
           </widget>
-          <widget class="QWidget" name="tab_12">
+          <widget class="QWidget" name="Serial_manager">
            <attribute name="title">
-            <string>Tab 2</string>
+            <string>Serial </string>
            </attribute>
-           <widget class="QWidget" name="widget_3" native="true">
+          </widget>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>File</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>Page</string>
+           </attribute>
+           <widget class="QGroupBox" name="groupBox_9">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>823</width>
-              <height>551</height>
+              <x>42</x>
+              <y>10</y>
+              <width>202</width>
+              <height>531</height>
              </rect>
             </property>
-            <layout class="QGridLayout" name="gridLayout_5">
-             <item row="0" column="4" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_w_2">
+            <property name="title">
+             <string>Arm list</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_motion_list_4">
+             <item>
+              <widget class="QListWidget" name="motion_list_4"/>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QGroupBox" name="hw_groupBox_82">
+            <property name="geometry">
+             <rect>
+              <x>614</x>
+              <y>10</y>
+              <width>168</width>
+              <height>531</height>
+             </rect>
+            </property>
+            <property name="title">
+             <string>Head Waist Control</string>
+            </property>
+            <layout class="QVBoxLayout" name="hw_verticalLayout_button_set_motion_4">
+             <item>
+              <widget class="QLabel" name="hw_motion_file_label_4">
                <property name="text">
-                <string>W</string>
+                <string>Pos File :</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_x_2">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>20</height>
-                </size>
-               </property>
+             <item>
+              <widget class="QComboBox" name="hw_motion_add_file_combo_4"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="hw_motion_time_label_4">
                <property name="text">
-                <string>X</string>
+                <string>Motion Time(ms) :</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="5">
-              <widget class="QPushButton" name="go_Button_2">
+             <item>
+              <widget class="QDoubleSpinBox" name="hw_motion_time_edit_4">
+               <property name="decimals">
+                <number>0</number>
+               </property>
+               <property name="minimum">
+                <double>0.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>1000000.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>100.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>500.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="hw_motion_add_file_4">
                <property name="text">
-                <string>Go</string>
-               </property>
-               <property name="checkable">
-                <bool>false</bool>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
+                <string>Add Head Waist</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="1">
-              <widget class="QLineEdit" name="lineEdit_12">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="Vel_x_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="3">
-              <widget class="QLineEdit" name="Init_theta_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QLineEdit" name="Init_x_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="2">
-              <widget class="QLineEdit" name="lineEdit_9">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="5">
-              <widget class="QPushButton" name="stop_button_2">
+             <item>
+              <widget class="QPushButton" name="hw_motion_remove_file_4">
                <property name="text">
-                <string>STOP</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
+                <string>Remove Head Waist</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="2">
-              <widget class="QLineEdit" name="Init_y_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_y_2">
+             <item>
+              <widget class="QPushButton" name="motion_file_play_test_4">
                <property name="text">
-                <string>Y</string>
+                <string>Motion Play</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="2">
-              <widget class="QLineEdit" name="Vel_y_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_5">
+             <item>
+              <widget class="QLabel" name="motion_file_play_save_label_4">
                <property name="text">
-                <string>Robot's Velocity</string>
+                <string>File Name</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="3">
-              <widget class="QLineEdit" name="Vel_theta_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_7">
+             <item>
+              <widget class="QLineEdit" name="motion_file_play_save_edit_4">
                <property name="text">
-                <string>Robot's Position</string>
+                <string>test.joint</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="0" rowspan="2" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_6">
+             <item>
+              <widget class="QPushButton" name="motion_file_play_save_4">
                <property name="text">
-                <string>Go To Goal</string>
+                <string>Play and Save</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="Pose_x_2">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-              </widget>
+            </layout>
+           </widget>
+           <widget class="QGroupBox" name="hw_groupBox_9">
+            <property name="geometry">
+             <rect>
+              <x>406</x>
+              <y>10</y>
+              <width>202</width>
+              <height>531</height>
+             </rect>
+            </property>
+            <property name="title">
+             <string>Head Waist list</string>
+            </property>
+            <layout class="QVBoxLayout" name="hw_verticalLayout_motion_list_4">
+             <item>
+              <widget class="QListWidget" name="hw_motion_list_4"/>
              </item>
-             <item row="1" column="2">
-              <widget class="QLineEdit" name="Pose_y_2">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QLineEdit" name="lineEdit_13"/>
-             </item>
-             <item row="6" column="4">
-              <widget class="QLineEdit" name="lineEdit_14"/>
-             </item>
-             <item row="7" column="4">
-              <widget class="QLineEdit" name="lineEdit_16">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="3">
-              <widget class="QLineEdit" name="lineEdit_11">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="3">
-              <widget class="QLineEdit" name="lineEdit_10"/>
-             </item>
-             <item row="0" column="3" alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_theta_2">
+            </layout>
+           </widget>
+           <widget class="QGroupBox" name="groupBox_82">
+            <property name="geometry">
+             <rect>
+              <x>250</x>
+              <y>10</y>
+              <width>150</width>
+              <height>531</height>
+             </rect>
+            </property>
+            <property name="title">
+             <string>Arm Control</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_button_set_motion_4">
+             <item>
+              <widget class="QPushButton" name="button_set_motion_4">
                <property name="text">
-                <string>Theta</string>
+                <string>Set Motion Mode</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="4">
-              <widget class="QLineEdit" name="Init_w_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_8">
+             <item>
+              <widget class="QLabel" name="motion_file_label_4">
                <property name="text">
-                <string>Robot's InitPose</string>
+                <string>Pos File :</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="2">
-              <widget class="QLineEdit" name="lineEdit_15"/>
+             <item>
+              <widget class="QComboBox" name="motion_add_file_combo_4"/>
              </item>
-             <item row="1" column="3">
-              <widget class="QLineEdit" name="Pose_theta_2">
-               <property name="enabled">
-                <bool>true</bool>
+             <item>
+              <widget class="QLabel" name="motion_time_label_4">
+               <property name="text">
+                <string>Motion Time(ms) :</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="motion_time_edit_4">
+               <property name="decimals">
+                <number>0</number>
+               </property>
+               <property name="minimum">
+                <double>0.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>1000000.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>100.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>500.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="motion_add_file_4">
+               <property name="text">
+                <string>Add Arm</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="motion_remove_file_4">
+               <property name="text">
+                <string>Remove Arm</string>
                </property>
               </widget>
              </item>
@@ -708,7 +724,6 @@
   </action>
  </widget>
  <tabstops>
-  <tabstop>view_logging</tabstop>
   <tabstop>tab_manager</tabstop>
  </tabstops>
  <resources/>
