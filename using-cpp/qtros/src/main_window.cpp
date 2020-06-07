@@ -49,8 +49,8 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   ********************************/
 //  qRegisterMetaType<geometry_msgs::Twist>("geometry_msgs::Twist");
   QObject::connect(ui.go_Button, SIGNAL(clicked()), this, SLOT(go_to_goal()));
-  QObject::connect(ui.stop_button, SIGNAL(clicked()), this, SLOT(go_to_cancel()));
-  QObject::connect(ui.clear_costmap_button, SIGNAL(clicked()), this, SLOT(clear_costmap()));
+  QObject::connect(ui.stop_Button, SIGNAL(clicked()), this, SLOT(go_to_cancel()));
+  QObject::connect(ui.clear_costmap_Button, SIGNAL(clicked()), this, SLOT(clear_costmap()));
 
   QObject::connect(&qnode, SIGNAL(OdomUpdated(float)), this, SLOT(updateOdom(float)));
   QObject::connect(&qnode, SIGNAL(InitUpdated(float)), this, SLOT(updateInit(float)));
@@ -131,7 +131,7 @@ void MainWindow::on_go_Button_clicked(bool check )
 
 }
 
-void MainWindow::on_stop_button_clicked(bool check)
+void MainWindow::on_stop_Button_clicked(bool check)
 {
     actionlib_msgs::GoalID cancel_goal_msg;
     move_base_msgs::MoveBaseActionGoal goal_msg;
@@ -151,7 +151,7 @@ void MainWindow::on_stop_button_clicked(bool check)
     simple_goal_msg.pose.orientation.z = qnode.m_goal_z;
     simple_goal_msg.pose.orientation.w = qnode.m_goal_w;
 
-    if (ui.stop_button->isChecked()) qnode.sendCancelGoalMsg(cancel_goal_msg);
+    if (ui.stop_Button->isChecked()) qnode.sendCancelGoalMsg(cancel_goal_msg);
     else
     {
       qnode.sendGoalMsg(goal_msg);
@@ -159,7 +159,7 @@ void MainWindow::on_stop_button_clicked(bool check)
     }
 }
 
-void MainWindow::on_clear_costmap_button_clicked(bool check)
+void MainWindow::on_clear_costmap_Button_clicked(bool check)
 {
     std_srvs::Empty em;
     qnode.sendClearCostmapSrv(em);
@@ -209,7 +209,7 @@ void MainWindow::go_to_cancel()
     logging_model->insertRows(logging_model->rowCount(), 1);
     std::stringstream logging_model_msg;
 
-    if (ui.stop_button->isChecked())
+    if (ui.stop_Button->isChecked())
     {
       logging_model_msg << "STOP!!";
     }

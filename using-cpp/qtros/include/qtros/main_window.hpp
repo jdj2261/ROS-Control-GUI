@@ -51,8 +51,8 @@ public Q_SLOTS:
   *******************************************/
   void on_actionAbout_triggered();
   void on_go_Button_clicked(bool check);
-  void on_stop_button_clicked(bool check);
-  void on_clear_costmap_button_clicked(bool check);
+  void on_stop_Button_clicked(bool check);
+  void on_clear_costmap_Button_clicked(bool check);
 
 
   /******************************************
